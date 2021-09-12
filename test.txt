@@ -1,0 +1,71 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class Solution {
+public:
+        void showStr(string str)
+    {
+        for(char cStr : str)
+        {
+            cout<<cStr<<"-";
+        };
+        cout<<"end"<<endl;
+    };
+    
+    int lengthOfLongestSubstring(string s) 
+    {
+        int max = 0;
+        string tempStr;
+        if (!s.empty())
+            {
+                cout<<"s :"<<endl; //////////////////////////////////////////////////////////////////////////////////
+                showStr(s); //////////////////////////////////////////////////////////////////////////////////
+
+                tempStr = s.at(0); // присваиваем первый элемент строки 
+                s.erase(0,1);// удаляем первый элемент строки
+
+                cout<<"tempStr :"<<endl; //////////////////////////////////////////////////////////////////////////////////
+                showStr(tempStr);  //////////////////////////////////////////////////////////////////////////////////
+
+                for(char cs : s) // cs - char of string s 
+                    {
+                        cout<<"->"<<cs<<"<-\n"; //////////////////////////////////////////////////////////////////////////////////
+
+                        int pos = tempStr.find(cs); // если символ не уникален запоминаем его позицию в строке если нет то find вернет отрицательное число
+
+                        tempStr.push_back(cs); // сразу запоминаем новй символ. 
+
+                        if (pos > 0) // если символ не уникален
+                            {
+                                cout<<"found - "<<cs<<" on pos "<<pos<<endl; //////////////////////////////////////////////////////////////////////////////////
+                                cout<<"tempStr :"<<endl; //////////////////////////////////////////////////////////////////////////////////
+                                showStr(tempStr);  //////////////////////////////////////////////////////////////////////////////////
+                                tempStr.erase(0,pos+1); // оБрезаем строку до повторяющего символа (в памяти остаются только уникальные символы)
+                                cout<<"tempStr after erase :"<<endl; //////////////////////////////////////////////////////////////////////////////////
+                                showStr(tempStr);  //////////////////////////////////////////////////////////////////////////////////
+                                cout<<"MAX = "<<max<<" lenght = "<<tempStr.size()<<endl;
+                                if (max < tempStr.size()) max = tempStr.size(); // запоминаем самую длинную подстроку.
+                                cout<<"MAX = "<<max<<" lenght = "<<tempStr.size()<<endl;                                
+                            };
+                    };
+            }
+        cout<<"POST MAX = "<<max<<" lenght = "<<tempStr.size()<<endl;
+        if (max < tempStr.size()) max = tempStr.size();  // запоминаем самую длинную подстроку (на случай если последний символ был уникальный)
+        cout<<"POST MAX = "<<max<<" lenght = "<<tempStr.size()<<endl;
+        return max;
+    };
+
+
+int main()
+{
+    Solution sol;
+    string str = "abcbtbcbb";
+    string str2;
+    str2 = str.at(4);
+    
+    int a = sol.lengthOfLongestSubstring(str);
+
+    return 0;
+}
